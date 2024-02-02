@@ -5,7 +5,7 @@
         label="Add New Data"
         color="primary"
         class="my-3"
-        @click="dialog = true"
+        @click="addOpendialog"
       />&nbsp;
       <q-btn label="Logout" color="primary" class="my-3" @click="logoutUser"/>
     </div>
@@ -96,6 +96,7 @@
           </td>
         </tr>
       </tbody>
+      <p v-if="table_data.length == 0" style="text-align: center;">No Data Available</p>
     </q-markup-table>
   </div>
 </template>
@@ -153,9 +154,9 @@ export default {
     const addItem = () => {
       if (accept.value !== true) {
        if(!editItem.value){
-        const table_length = table_data.value.length;
+        const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
         const obj = {
-          id: table_length,
+          id: uniqueId,
           name: name.value,
           position: position.value,
           email: email.value,
@@ -166,12 +167,11 @@ export default {
        }else{
         let editArray = table_data.value.map(obj => {
             if(obj.id == edited_user_id.value){
-                return {...obj,name:name.value,email:email.value,positon:position.value}
+                return {...obj,name:name.value,email:email.value,position:position.value}
             }
             return obj
         })
         dialog.value = false;
-        console.log("find all data",editArray)
         alert("Item Edited Successfully");
         table_data.value = editArray;
        }
@@ -198,8 +198,19 @@ export default {
       const deleted_data = table_data.value.filter((obj) => obj.id !== data.id);
       table_data.value = deleted_data;
     };
+    const onReset = () => {
+      name.value = null;
+      email.value = null;
+      position.value = null;
+    };
+    const addOpendialog = ()=>{
+        editItem.value = false
+        dialog.value = true
+        onReset
+    }
     return {
       edited_user_id,
+      addOpendialog,
       table_data,
       checkauthentication,
       name,
@@ -212,6 +223,7 @@ export default {
       position,
       editItem,
       dialog,
+      onReset,
       separator: ref("cell"),
       addItem,
       separatorOptions: [

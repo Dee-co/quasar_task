@@ -29,6 +29,7 @@
         filled
         v-model="password"
         label="Password"
+        type="password"
         lazy-rules
         :rules="[
           (value) => !!value || 'Password is required',
@@ -38,6 +39,7 @@
       />
       <q-input
         filled
+        type="password"
         v-model="c_password"
         label="Confirm Password"
         lazy-rules
@@ -83,7 +85,8 @@
       <q-input
         filled
         v-model="password"
-        label="Password"
+        label="Password *"
+        type="password"
         lazy-rules
         :rules="[
           (value) => !!value || 'Password is required',
