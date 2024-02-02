@@ -127,9 +127,11 @@ export default {
     const islogin = ref(true);
     const openLogin = () => {
       islogin.value = true;
+      onReset();
     };
     const openRegister = () => {
       islogin.value = false;
+      onReset();
     };
     const getUserList = computed(() => getters["getUserList"]);
     const onReset = () => {
